@@ -1,4 +1,4 @@
-# Book: [Writing An Interpeter In Go](https://www.amazon.com/Writing-Interpreter-Go-Thorsten-Ball/dp/3982016118)
+# Book: [Writing An Interpreter In Go](https://www.amazon.com/Writing-Interpreter-Go-Thorsten-Ball/dp/3982016118)
 This repository contains my implementation of an interpreter in C++. I'm following along with the book "Writing an Interpreter in Go" by Thorsten Ball, but instead of using Go, I'm translating the code examples into C++ as a learning exercise.
 
 ## Overview

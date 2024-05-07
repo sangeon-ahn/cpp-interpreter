@@ -14,7 +14,7 @@ The goal of this project is to build an interpreter for a simple programming lan
 By working through the book and translating the Go code into C++, I aim to deepen my understanding of both programming languages and gain practical experience in building an interpreter from scratch.
 
 ## Progress
-- [x] Chapter 1: Lexing (In Progress)
+- [x] Chapter 1: Lexing
 - [ ] Chapter 2: Parsing
 - [ ] Chapter 3: Evaluation
 - [ ] Chapter 4: Extending the Interpreter

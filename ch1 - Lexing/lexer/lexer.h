@@ -3,17 +3,27 @@
 #include <iostream>
 #include "../token/token.h"
 using namespace std;
+
 class Lexer
 {
     public:
+        Lexer() = default;
         Lexer(std::string_view input) : m_input{input.data()} {}
         void readChar();
+        char peekChar();
         Token NextToken();
+        static Lexer New(std::string_view input) {
+            auto l = Lexer{input};
+            l.readChar();
+            return l;
+        }
+
     private:
         std::string m_input; 
         int m_position {};
         int m_readPosition {};
         char m_ch {};
+
         Token newToken(TokenType tokenType, char ch);
         std::string readIdentifier();
         bool isLetter(char ch);
@@ -32,6 +42,14 @@ void Lexer::readChar()
     ++m_readPosition;
 }
 
+char Lexer::peekChar()
+{
+    if (m_readPosition >= m_input.length()) {
+        return '\0';
+    }
+    return m_input[m_readPosition];
+}
+
 Token Lexer::NextToken()
 {
     Token tok;
@@ -41,7 +59,40 @@ Token Lexer::NextToken()
     switch (m_ch)
     {
     case '=':
-        tok = newToken(token::_ASSIGN, m_ch);
+        if (peekChar() == '=') {
+            char ch = m_ch;
+            readChar();
+            tok = Token{token::_EQ, string(1, ch) + ch};
+        } else {
+            tok = newToken(token::_ASSIGN, m_ch);
+        }
+        break;
+    case '+':
+        tok = newToken(token::_PLUS, m_ch);
+        break;
+    case '-':
+        tok = newToken(token::_MINUS, m_ch);
+        break;
+    case '!':
+        if (peekChar() == '=') {
+            char ch = m_ch;
+            readChar();
+            tok = Token{token::_NOT_EQ, string(1, ch) + m_ch};
+        } else {
+            tok = newToken(token::_INVERSE, m_ch);
+        }
+        break;
+    case '/':
+        tok = newToken(token::_SLASH, m_ch);
+        break;
+    case '*':
+        tok = newToken(token::_ASTERISK, m_ch);
+        break;
+    case '<':
+        tok = newToken(token::_LT, m_ch);    
+        break;
+    case '>':
+        tok = newToken(token::_GT, m_ch);
         break;
     case ';':
         tok = newToken(token::_SEMICOLON, m_ch);
@@ -55,9 +106,6 @@ Token Lexer::NextToken()
     case ',':
         tok = newToken(token::_COMMA, m_ch);
         break;
-    case '+':
-        tok = newToken(token::_PLUS, m_ch);
-        break;
     case '{':
         tok = newToken(token::_LBRACE, m_ch);
         break;
@@ -69,6 +117,8 @@ Token Lexer::NextToken()
         tok.Type = token::_EOF;
         break;
     default:
+        // 나머지 경우는 identifier, 숫자, invalid값 중 하나
+
         if (isLetter(m_ch)) {
             tok.Literal = readIdentifier();
             tok.Type = token::LookupIdent(tok.Literal);
@@ -123,11 +173,6 @@ Token Lexer::newToken(TokenType tokenType, char ch)
     return Token{tokenType, std::string(1, ch)};
 }
 
-Lexer New(std::string_view input)
-{
-    auto l = Lexer{input};
-    l.readChar();
-    return l;
-}
+
 
 

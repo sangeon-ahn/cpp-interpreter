@@ -10,10 +10,24 @@ void TestNextToken()
 {
     string input = "let five = 5;"
     "let ten = 10;"
+
     "let add = fn(x, y) {"
     " x + y;"
     "};"
-    "let result = add(five, ten);";
+    
+    "let result = add(five, ten);"
+    "!-/*5;"
+    "5 < 10 > 5;"
+    
+    "if (5 < 10) {"
+    "   return true;"
+    "} else {"
+    "   return false;"
+    "}"
+
+    "10 == 10;"
+    "10 != 9;"
+    ;
 
     vector<Token> tests {
         Token{token::_LET, "let"},
@@ -52,10 +66,47 @@ void TestNextToken()
         Token{token::_IDENT, "ten"},
         Token{token::_RPAREN, ")"},
         Token{token::_SEMICOLON, ";"},
+        Token{token::_INVERSE, "!"},
+        Token{token::_MINUS, "-"},
+        Token{token::_SLASH, "/"},
+        Token{token::_ASTERISK, "*"},
+        Token{token::_INT, "5"},
+        Token{token::_SEMICOLON, ";"},
+        Token{token::_INT, "5"},
+        Token{token::_LT, "<"},
+        Token{token::_INT, "10"},
+        Token{token::_GT, ">"},
+        Token{token::_INT, "5"},
+        Token{token::_SEMICOLON, ";"},
+        Token{token::_IF, "if"},
+        Token{token::_LPAREN, "("},
+        Token{token::_INT, "5"},
+        Token{token::_LT, "<"},
+        Token{token::_INT, "10"},
+        Token{token::_RPAREN, ")"},
+        Token{token::_LBRACE, "{"},
+        Token{token::_RETURN, "return"},
+        Token{token::_TRUE, "true"},
+        Token{token::_SEMICOLON, ";"},
+        Token{token::_RBRACE, "}"},
+        Token{token::_ELSE, "else"},
+        Token{token::_LBRACE, "{"},
+        Token{token::_RETURN, "return"},
+        Token{token::_FALSE, "false"},
+        Token{token::_SEMICOLON, ";"},
+        Token{token::_RBRACE, "}"},
+        Token{token::_INT, "10"},
+        Token{token::_EQ, "=="},
+        Token{token::_INT, "10"},
+        Token{token::_SEMICOLON, ";"},
+        Token{token::_INT, "10"},
+        Token{token::_NOT_EQ, "!="},
+        Token{token::_INT, "9"},
+        Token{token::_SEMICOLON, ";"},
         Token{token::_EOF, ""},
     };
 
-    Lexer lexer = New(input);
+    Lexer lexer = Lexer::New(input);
 
     int idx = 1;
     int failed_cnts = 0;
@@ -79,6 +130,7 @@ void TestNextToken()
 
     cout << "result: " << "total=" << 2 * total_test_cnts << " success=" << 2 * total_test_cnts - failed_cnts << " failed=" << failed_cnts << endl;
 }
+
 
 int main()
 {

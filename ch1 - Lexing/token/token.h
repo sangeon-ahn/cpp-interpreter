@@ -24,6 +24,15 @@ namespace token {
     // Operators
     const TokenType _ASSIGN = "=";
     const TokenType _PLUS = "+";
+    const TokenType _MINUS = "-";
+    const TokenType _INVERSE = "!";
+    const TokenType _ASTERISK = "*";
+    const TokenType _SLASH = "/";
+    const TokenType _EQ = "==";
+    const TokenType _NOT_EQ = "!=";
+
+    const TokenType _LT = "<"; // lower than
+    const TokenType _GT = ">"; // greater than
 
     // Delimiters
     const TokenType _COMMA = ",";
@@ -37,12 +46,22 @@ namespace token {
     // Keywords
     const TokenType _FUNCTION = "FUNCTION";
     const TokenType _LET = "LET";
+    const TokenType _TRUE = "TRUE";
+    const TokenType _FALSE = "FALSE";
+    const TokenType _IF = "IF";
+    const TokenType _ELSE = "ELSE";
+    const TokenType _RETURN = "RETURN";
 
     // built-in 키워드 저장
     std::unordered_map<std::string, TokenType> keywords
     {
         {"fn", _FUNCTION},
-        {"let", _LET}
+        {"let", _LET},
+        {"true", _TRUE},
+        {"false", _FALSE},
+        {"if", _IF},
+        {"else", _ELSE},
+        {"return", _RETURN}
     };
 
     TokenType LookupIdent(std::string ident)
